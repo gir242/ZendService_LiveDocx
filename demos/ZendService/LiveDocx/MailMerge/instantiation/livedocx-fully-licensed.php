@@ -20,10 +20,10 @@ Helper::printLine(
 
 $mailMerge = new MailMerge();
 
-$mailMerge->setUsername('your-username')                                   // set your username here
-          ->setPassword('your-password')                                   // set your password here
-          ->setWsdl    ('http://api.example.com/2.1/mailmerge.asmx?wsdl'); // set the WSDL of your locally installed,
-                                                                           // LiveDocx Fully Licensed server here
+$mailMerge->setUsername(DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME)  // set your username here
+          ->setPassword(DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD)  // set your password here
+          ->setWsdl    (DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_WSDL);     // set the WSDL of your locally installed,
+                                                                             // LiveDocx Fully Licensed server here
 $mailMerge->getTemplateFormats(); // then call methods as usual
 
 printf('Username : %s%sPassword : %s%s    WSDL : %s%s%s',
@@ -45,10 +45,10 @@ unset($mailMerge);
 $mailMerge = new MailMerge();
 
 $mailMerge = new MailMerge(array(
-    'username' => 'your-username',                                         // set your username here
-    'password' => 'your-password',                                         // set your password here
-        'wsdl' => 'http://api.example.com/2.1/mailmerge.asmx?wsdl'));      // set the WSDL of your
-                                                                           // LiveDocx Fully Licensed server here
+    'username' => DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME,        // set your username here
+    'password' => DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD,        // set your password here
+        'wsdl' => DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_WSDL));          // set the WSDL of your
+                                                                             // LiveDocx Fully Licensed server here
 $mailMerge->getTemplateFormats(); // then call methods as usual
 
 printf('Username : %s%sPassword : %s%s    WSDL : %s%s%s',

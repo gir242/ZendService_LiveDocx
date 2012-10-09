@@ -13,7 +13,7 @@ define('TEST_PASS',         'PASS');
 define('TEST_FAIL',         'FAIL');
 
 define('MIN_PHP_VERSION',   '5.3');
-define('MIN_ZF_VERSION',    '2.0.0rc1');
+define('MIN_ZF_VERSION',    '2.0.0');
 
 define('GEOIP_SERVICE_URI', 'http://api.ipinfodb.com/v2/ip_query.php?key=332bde528d94fe578455e18ad225a01cba8dd359ee915ee46b70ca5e67137252');
 
@@ -350,6 +350,89 @@ if (defined('DEMOS_ZENDSERVICE_LIVEDOCX_PREMIUM_USERNAME')     &&
     }
 
     Helper::printLineToc($counter, sprintf('Logging into LiveDocx Premium (%01.2fs)', $duration), $result);
+
+    $counter++;
+}
+
+// -----------------------------------------------------------------------------
+
+if (defined('DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME') &&
+        false !== DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME) {
+
+    $mailMerge = new MailMerge();
+
+    $mailMerge->setUsername(DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME)
+              ->setPassword(DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD)
+              ->setWsdl    (DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_WSDL);
+
+    $microtime = microtime(true);
+
+    $results = @file_get_contents($mailMerge->getWsdl());
+
+    if (false != $results) {
+        $duration = microtime(true) - $microtime;
+        $result   = TEST_PASS;
+    } else {
+        $duration = -1;
+        $result   = TEST_FAIL;
+        $failed   = true;
+    }
+
+    Helper::printLineToc($counter, sprintf('Checking LiveDocx Fully Licensed WSDL (%01.2fs)', $duration), $result);
+
+    $counter++;
+
+    unset($mailMerge);
+
+}
+
+// -----------------------------------------------------------------------------
+
+if (defined('DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME')     &&
+        defined('DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD') &&
+        false !== DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME  &&
+        false !== DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD) {
+    $result = TEST_PASS;
+} else {
+    $result = TEST_FAIL;
+    $failed = false;
+}
+
+Helper::printLineToc($counter, 'Checking LiveDocx Fully Licensed credentials are defined', $result);
+
+$counter++;
+
+// -----------------------------------------------------------------------------
+
+if (defined('DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME')     &&
+        defined('DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD') &&
+        false !== DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME  &&
+        false !== DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD) {
+
+    $errorMessage = null;
+
+    try {
+        $microtime = microtime(true);
+        $mailMerge = new MailMerge();
+        $mailMerge->setUsername(DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_USERNAME)
+                  ->setPassword(DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_PASSWORD)
+                  ->setWsdl    (DEMOS_ZENDSERVICE_LIVEDOCX_FULLY_LICENSED_WSDL)
+                  ->listTemplates();
+        $duration = microtime(true) - $microtime;
+        unset($mailMerge);
+    } catch (Exception $e) {
+        $duration = -1;
+        $errorMessage = $e->getMessage();
+    }
+
+    if (is_null($errorMessage)) {
+        $result = TEST_PASS;
+    } else {
+        $result = TEST_FAIL;
+        $failed = true;
+    }
+
+    Helper::printLineToc($counter, sprintf('Logging into LiveDocx Fully Licensed (%01.2fs)', $duration), $result);
 
     $counter++;
 }
